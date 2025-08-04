@@ -1,0 +1,10 @@
+
+backend/node_modules
+
+backend/uploads/
+backend/pdf/
+
+.DS_Store
+Thumbs.db
+
+
