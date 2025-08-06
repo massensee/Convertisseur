@@ -7,18 +7,25 @@
     <title>Convertisseur d'images en PDF</title>
   </head>
   <body>
-    <main class="container">
-      <h1>Convertisseur d'images en PDF</h1>
-
-      <input type="file" id="imageInput" accept="image/*" multiple />
-
-      <div id="previewContainer"></div>
-
-      <button id="generatePdfBtn">Générer PDF</button>
-      <a id="downloadLink" style="display: none" download="images.pdf"
-        >Télécharger le PDF</a
-      >
-    </main>
+    <div class="wrapper">
+      <div class="content">
+        <main class="container">
+          <h1>Convertisseur d'images en PDF</h1>
+          <input type="file" id="imageInput" accept="image/*" multiple />
+          <button id="generatePdfBtn">Générer PDF</button>
+          <a id="downloadLink" style="display: none" download="images.pdf"
+            >Télécharger le PDF</a
+          >
+        </main>
+        <section class="visuelContainer">
+          <h2>Aperçu des images sélectionnées :</h2>
+          <div id="previewContainer"></div>
+        </section>
+      </div>
+      <footer class="footer">
+        <p>Développé par Massensee — 2025</p>
+      </footer>
+    </div>
     <script src="./app.js"></script>
   </body>
 </html>
