@@ -60,6 +60,7 @@ a#downloadLink {
 /* Zone de prévisualisation */
 .visuelContainer {
   max-width: 800px;
+  height: 200px;
   margin: 30px auto;
   padding: 20px;
   background-color: #ffffff;
@@ -77,15 +78,29 @@ a#downloadLink {
 /* Conteneur des images */
 #previewContainer {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+#previewLeft,
+#previewRight {
+  flex: 1;
+  display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  justify-content: flex-start;
+  gap: 10px;
+  justify-content: center;
+}
+
+#previewArrow {
+  font-size: 2rem;
+  color: #888;
 }
 
 /* Miniature */
 #previewContainer img {
   width: 100px;
-  height: 100px;
+  height: 150px;
   object-fit: cover;
   border-radius: 6px;
   border: 1px solid #ccc;
