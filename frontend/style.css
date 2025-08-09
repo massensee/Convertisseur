@@ -50,6 +50,30 @@ button:hover {
   background-color: #34495e;
 }
 
+#pdfMessage {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pdf-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pdf-actions button {
+  padding: 8px 15px;
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pdf-actions button:hover {
+  background-color: #34495e;
+}
+
 a#downloadLink {
   display: block;
   text-align: center;

@@ -4,6 +4,9 @@ const imageLeft = document.getElementById("previewLeft");
 const imageRight = document.getElementById("previewRight");
 const genererBtn = document.getElementById("generatePdfBtn");
 
+let currentDoc = null;
+let currentPdfUrl = null;
+
 input.addEventListener("change", () => {
   imageLeft.innerHTML = "";
   const fichiers = input.files;
@@ -21,50 +24,43 @@ input.addEventListener("change", () => {
 });
 
 genererBtn.addEventListener("click", () => {
-  imageRight.innerHTML = "";
+  // Nettoyer ancien PDF en mémoire
+  if (currentPdfUrl) {
+    URL.revokeObjectURL(currentPdfUrl);
+    currentPdfUrl = null;
+  }
+  currentDoc = null;
+  document.getElementById("pdfMessage").style.display = "none";
 
-  const imagesCopiees = imageLeft.querySelectorAll("img");
+  // Récupérer la première image pour le PDF
+  const premiereImage = imageLeft.querySelector("img");
+  if (!premiereImage) {
+    alert("Ajoutez d'abord une image !");
+    return;
+  }
 
-  imagesCopiees.forEach((image) => {
-    const clone = image.cloneNode(true);
-    imageRight.appendChild(clone);
-  });
+  // Générer le PDF sans le télécharger tout de suite
+  const doc = new jspdf.jsPDF();
+  doc.addImage(premiereImage.src, "JPEG", 10, 10, 180, 160);
 
-  const premiereImage = imageRight.querySelector("img");
+  // Sauvegarder en mémoire
+  currentDoc = doc;
+  currentPdfUrl = doc.output("bloburl");
 
-  // Crée un nouvel objet Image à partir du src
-  const tempImage = new Image();
-  tempImage.src = premiereImage.src;
+  // Afficher le message avec les boutons
+  document.getElementById("pdfMessage").style.display = "block";
+});
 
-  tempImage.onload = () => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+// Gestion du clic "Aperçu"
+document.getElementById("previewPdfBtn").addEventListener("click", () => {
+  if (currentPdfUrl) {
+    window.open(currentPdfUrl, "_blank");
+  }
+});
 
-    canvas.width = tempImage.naturalWidth;
-    canvas.height = tempImage.naturalHeight;
-
-    ctx.drawImage(tempImage, 0, 0);
-
-    const imageData = canvas.toDataURL("image/png");
-
-    const doc = new jspdf.jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
-    });
-
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-
-    const ratio = Math.min(
-      pageWidth / canvas.width,
-      pageHeight / canvas.height
-    );
-
-    const imgWidth = canvas.width * ratio;
-    const imgHeight = canvas.height * ratio;
-
-    doc.addImage(imageData, "PNG", 10, 10, imgWidth, imgHeight);
-    doc.save("images.pdf");
-  };
+// Gestion du clic "Télécharger"
+document.getElementById("downloadPdfBtn").addEventListener("click", () => {
+  if (currentDoc) {
+    currentDoc.save("images.pdf");
+  }
 });
